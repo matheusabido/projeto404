@@ -15,7 +15,6 @@ const router = createBrowserRouter([
     ),
   },
   lazy("/", "Home"),
-  lazy("/buscar", "Buscar"),
 ]);
 
 export default router;
