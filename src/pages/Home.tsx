@@ -12,7 +12,11 @@ import { FaDatabase, FaTv } from "react-icons/fa6";
 export default function HomePage() {
   const buscarSectionRef = useRef<HTMLDivElement>(null);
   
+  // TODO: Toast
+  // TODO: Modal
   // TODO: Tratar erros
+  // TODO: Modo TV
+  // TODO: Melhorar carrossel?
   const { data: pessoasDinamico, isError: pessoasDinamicoError } = useQuery({
     queryKey: ["pessoas-dinamico"],
     queryFn: () => api.get<Pessoa[]>("/pessoas/aberto/dinamico?registros=12"),
@@ -39,7 +43,7 @@ export default function HomePage() {
 
   return <>
     <Header />
-    <div className="mx-8 py-16 border-b border-gray-300 flex justify-between items-center">
+    <div className="mx-8 py-16 border-b border-gray-300 flex justify-between items-center flex-col md:flex-row gap-16">
       <div>
         <div className="flex items-center gap-4">
           <FaDatabase className="text-4xl" />
