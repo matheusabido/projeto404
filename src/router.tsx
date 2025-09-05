@@ -15,6 +15,7 @@ const router = createBrowserRouter([
     ),
   },
   lazy("/", "Home"),
+  lazy("/tv", "ModoTV"),
 ]);
 
 export default router;
