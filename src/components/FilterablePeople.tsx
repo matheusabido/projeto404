@@ -38,7 +38,7 @@ export default function FilterablePeople({ data, ref, onClick }: Props) {
       </div>
     </div>
     <div className="mt-4 gap-8 flex flex-wrap">
-      {!data && new Array(20).fill(null).map((_, i) => <Card key={i} />)}
+      {!data && new Array(20).fill(null).map((_, i) => <Card className="mx-auto" key={i} />)}
       {data && data.content.map(pessoa => <Card className="mx-auto" key={pessoa.id} pessoa={pessoa} onClick={onClick} />)}
     </div>
   </div>;

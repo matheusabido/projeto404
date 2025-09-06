@@ -6,10 +6,12 @@ type Props = {
     style?: CSSProperties
     onLoad?: () => void
     onError?: () => void
+    fallbackSrc?: string
 }
 
-export default function MoveableImage({ src, alt, style, onLoad, onError }: Props) {
+export default function MoveableImage({ src: source, fallbackSrc, alt, style, onLoad, onError }: Props) {
   const [relativeMousePos, setRelativeMousePos] = useState<[number, number]>([.5, .5]);
+  const [src, setSrc] = useState(source);
 
   function handleMouseMove(e: React.MouseEvent) {
     const imageRect = e.currentTarget.getBoundingClientRect();
@@ -18,11 +20,16 @@ export default function MoveableImage({ src, alt, style, onLoad, onError }: Prop
 
     setRelativeMousePos([relativeX, relativeY]);
   }
+  
+  function handleError() {
+    onError?.();
+    if (fallbackSrc) setSrc(fallbackSrc);
+  }
 
   return <img
     loading="lazy"
     onLoad={onLoad}
-    onError={onError}
+    onError={handleError}
     onMouseMove={handleMouseMove}
     onMouseLeave={() => setRelativeMousePos([.5, .5])}
     style={{

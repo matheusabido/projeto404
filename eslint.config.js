@@ -24,6 +24,7 @@ export default tseslint.config([
       "semi": ["error", "always"],
       "indent": ["error", 2],
       "object-curly-spacing": ["error", "always"],
+      "react-refresh/only-export-components": ["off"]
     }
   },
 ])

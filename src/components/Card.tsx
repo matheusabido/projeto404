@@ -6,6 +6,7 @@ import { FaEye } from "react-icons/fa6";
 import { twMerge } from "tailwind-merge";
 import MoveableImage from "./MoveableImage";
 import Badges from "./Badges";
+import DefaultPhoto from "@/assets/default-photo.jpg";
 
 type Props = {
   pessoa?: Pessoa
@@ -16,14 +17,17 @@ type Props = {
 export default function Card({ pessoa, className, onClick }: Props) {
   const [loaded, setLoaded] = useState(false);
 
-  
   return <div className={twMerge("w-80 min-w-80 shadow border border-gray-100 rounded p-4 flex flex-col", className)}>
     <div className="relative w-full h-72 rounded mb-4">
       {!(pessoa && loaded) && <div className="bg-gray-300 animate-pulse w-full h-full rounded"></div>}
       {pessoa && <MoveableImage
         onLoad={() => setLoaded(true)}
-        onError={() => setLoaded(true)}
-        src={pessoa.urlFoto}
+        onError={() => {
+          setLoaded(true);
+          console.log(`Error loading image for ${pessoa.nome}`);
+        }}
+        src={pessoa.urlFoto || DefaultPhoto}
+        fallbackSrc={DefaultPhoto}
         alt={`Foto de ${pessoa.nome}`}
         style={{ visibility: loaded ? "visible" : "hidden" }}
       />}

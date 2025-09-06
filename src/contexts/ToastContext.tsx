@@ -34,7 +34,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         .filter((toast) => toast.timeout <= Date.now())
         .map((toast) => toast.id);
 
-      removeToasts(toRemove);
+      if (toRemove.length) {
+        removeToasts(toRemove);
+      }
     }, 100);
     
     return () => clearInterval(interval);

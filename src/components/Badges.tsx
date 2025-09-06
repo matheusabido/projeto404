@@ -8,7 +8,7 @@ type Props = {
 
 export default function Badges({ pessoa }: Props) {
   return (
-    <div className="absolute w-full top-0 left-0 p-2 justify-between flex gap-1">
+    <div className="absolute w-full top-0 left-0 p-2 justify-between flex gap-1 pointer-events-none">
       <div>
         <div className={clsx(
           "font-semibold text-sm text-white px-2 py-1 rounded",

@@ -3,12 +3,19 @@ export type Ocorrencia = {
     "descricao": string,
 }
 
+export type Informacao = {
+    ocoId: number
+    informacao: string
+    data: string // yyyy-MM-dd
+    anexos: string[] | null
+}
+
 export type InformacaoDesaparecido = {
     "ocoId": number,
     "informacao": string,
     "data": string, // yyyy-MM-dd
     "id": number,
-    "anexos": string[]
+    "anexos": string[]  | null
 }
 
 export type DetalheOcorrencia = {

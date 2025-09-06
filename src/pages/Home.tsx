@@ -1,7 +1,7 @@
 import api from "@/api";
 import Button from "@/components/Button";
 import Carrossel from "@/components/Carrossel";
-import DetalhesModal from "@/components/DetalhesModal";
+import DetalhesModal from "@/components/DetalhesModal/DetalhesModal";
 import FilterablePeople from "@/components/FilterablePeople";
 import Header from "@/components/Header";
 import { useToast } from "@/contexts/ToastContext";
@@ -19,6 +19,7 @@ export default function HomePage() {
   const [pessoa, setPessoa] = useState<Pessoa>();
 
   // TODO: Adicionar informações
+  // TODO: Filtros
   // TODO: Modo TV
   const { data: pessoasDinamico, isError: pessoasDinamicoError } = useQuery({
     queryKey: ["pessoas-dinamico"],
