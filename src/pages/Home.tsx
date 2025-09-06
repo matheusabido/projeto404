@@ -4,18 +4,21 @@ import Carrossel from "@/components/Carrossel";
 import DetalhesModal from "@/components/DetalhesModal";
 import FilterablePeople from "@/components/FilterablePeople";
 import Header from "@/components/Header";
+import { useToast } from "@/contexts/ToastContext";
 import type { Paginate, Pessoa, Statistics } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaSadTear, FaSearch, FaSmile } from "react-icons/fa";
 import { FaDatabase, FaTv } from "react-icons/fa6";
 
 export default function HomePage() {
   const buscarSectionRef = useRef<HTMLDivElement>(null);
   
+  const { addToast } = useToast();
+
   const [pessoa, setPessoa] = useState<Pessoa>();
-  // TODO: Toast
-  // TODO: Tratar erros
+
+  // TODO: Adicionar informações
   // TODO: Modo TV
   const { data: pessoasDinamico, isError: pessoasDinamicoError } = useQuery({
     queryKey: ["pessoas-dinamico"],
@@ -23,6 +26,7 @@ export default function HomePage() {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
+    retry: 2,
   });
 
   const { data: pessoasFiltro, isError: pessoasFiltroError } = useQuery({
@@ -31,6 +35,7 @@ export default function HomePage() {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
+    retry: 2,
   });
 
   const { data: stats, isError: statsError } = useQuery({
@@ -39,7 +44,26 @@ export default function HomePage() {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
+    retry: 2,
   });
+
+  useEffect(() => {
+    if (pessoasDinamicoError) {
+      addToast({ type: "error", title: "Erro ao carregar pessoas", message: "Não foi possível carregar as pessoas em destaque. Tente novamente mais tarde." });
+    }
+  }, [pessoasDinamicoError, addToast]);
+
+  useEffect(() => {
+    if (pessoasFiltroError) {
+      addToast({ type: "error", title: "Erro ao carregar pessoas", message: "Não foi possível carregar as pessoas. Tente novamente mais tarde." });
+    }
+  }, [pessoasFiltroError, addToast]);
+
+  useEffect(() => {
+    if (statsError) {
+      addToast({ type: "error", title: "Erro ao carregar estatísticas", message: "Não foi possível carregar as estatísticas. Tente novamente mais tarde." });
+    }
+  }, [statsError, addToast]);
 
   return <>
     <DetalhesModal pessoa={pessoa} onClose={() => setPessoa(undefined)} />

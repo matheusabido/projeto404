@@ -40,7 +40,7 @@ export default function Card({ pessoa, className, onClick }: Props) {
     
     <div>
       {pessoa && <p className="uppercase font-medium text-lg whitespace-nowrap w-full overflow-hidden text-ellipsis">{pessoa.nome}</p>}
-      {!pessoa && <div className="w-full h-6 bg-gray-300 animate-pulse rounded"></div>}
+      {!pessoa && <div className="w-full h-6 bg-gray-300 animate-pulse rounded mb-2"></div>}
     </div>
     
     {pessoa && <div className="flex flex-col justify-between flex-1">
