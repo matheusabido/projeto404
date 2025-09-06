@@ -6,7 +6,7 @@ import Button from "../Button";
 
 type Props = {
   pessoa?: Pessoa
-  setTab: (tab: "resumo" | "ocorrencias") => void
+  setTab: (tab: "resumo" | "ocorrencias" | "anexos") => void
 }
 
 export default function Resumo({ pessoa, setTab }: Props) {

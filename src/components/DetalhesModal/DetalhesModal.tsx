@@ -9,6 +9,7 @@ import Resumo from "./Resumo";
 import { useEffect, useState } from "react";
 import Ocorrencias from "./Ocorrencias";
 import { useToast } from "@/contexts/ToastContext";
+import Anexos from "./Anexos";
 
 type Props=  {
   pessoa?: Pessoa
@@ -16,7 +17,8 @@ type Props=  {
 }
 
 export default function DetalhesModal({ pessoa, onClose }: Props) {
-  const [tab, setTab] = useState<"resumo" | "ocorrencias">("resumo");
+  const [tab, setTab] = useState<"resumo" | "ocorrencias" | "anexos">("resumo");
+  const [anexos, setAnexos] = useState<string[]>();
 
   const { addToast } = useToast();
 
@@ -54,7 +56,8 @@ export default function DetalhesModal({ pessoa, onClose }: Props) {
           <p className="font-medium text-xl">{pessoa?.nome}</p>
           <p className="text-gray-700">{pessoa?.idade} anos</p>
           {tab === "resumo" && <Resumo pessoa={pessoa} setTab={setTab} />}
-          {tab === "ocorrencias" && <Ocorrencias data={data?.data} setTab={setTab} />}
+          {tab === "ocorrencias" && <Ocorrencias data={data?.data} setTab={setTab} setAnexos={setAnexos} />}
+          {tab === "anexos" && <Anexos setTab={setTab} data={anexos} />}
         </div>
       </div>
     </Modal>

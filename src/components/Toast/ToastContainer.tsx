@@ -7,7 +7,7 @@ type ToastContainerProps = {
 
 export function ToastContainer({ children }: ToastContainerProps) {
   return ReactDOM.createPortal(
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-4">
+    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-4">
       {children}
     </div>,
     document.getElementById("toast-root")!

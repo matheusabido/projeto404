@@ -6,10 +6,11 @@ import { formatDate } from "@/utils/date";
 
 type Props = {
   data?: Informacao[]
-  setTab: (tab: "resumo" | "ocorrencias") => void
+  setTab: (tab: "resumo" | "ocorrencias" | "anexos") => void
+  setAnexos: (anexos: string[]) => void
 }
 
-export default function Ocorrencias({ data, setTab }: Props) {
+export default function Ocorrencias({ data, setTab, setAnexos }: Props) {
   const groupedData = useMemo(() => {
     return data?.reduce((a, b) => ({ ...a, [b.data]: [...(a[b.data] || []), b] }), {} as Record<string, Informacao[]>);
   }, [data]);
@@ -37,7 +38,10 @@ export default function Ocorrencias({ data, setTab }: Props) {
           {data.map((info, i) => (
             <div key={`${j}-${i}`} className="border border-gray-300 rounded p-2 mb-2">
               <p>{info.informacao}</p>
-              {!!info.anexos?.length && <p onClick={() => setTab("resumo")} className="text-sm text-indigo-600 underline mt-1 cursor-pointer">Clique aqui para ver os anexos.</p>}
+              {!!info.anexos?.length && <p onClick={() => {
+                setTab("anexos");
+                setAnexos(info.anexos!);
+              }} className="text-sm text-indigo-600 underline mt-1 cursor-pointer">Clique aqui para ver os anexos.</p>}
               {!info.anexos?.length && <p className="text-sm text-gray-600 mt-1">Essa informação não tem anexos.</p>}
             </div>
           ))}
