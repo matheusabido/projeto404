@@ -4,10 +4,11 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { useRef, useState } from "react";
 
 type Props = {
-    data?: Pessoa[]
+  data?: Pessoa[]
+  onClick?: (pessoa: Pessoa) => void
 }
 
-export default function Carrossel({ data }: Props) {
+export default function Carrossel({ data, onClick }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState<number>(0);
   const [margin, setMargin] = useState<number>(0);
@@ -49,7 +50,7 @@ export default function Carrossel({ data }: Props) {
         style={{ marginLeft: `-${margin}px`, transition: "margin-left 0.3s" }}
       >
         {data?.map((pessoa) => (
-          <Card key={pessoa.id} pessoa={pessoa} />
+          <Card key={pessoa.id} pessoa={pessoa} onClick={onClick} />
         ))}
         {!data && new Array(12).fill(null).map((_, i) => <Card key={i} />)}
       </div>

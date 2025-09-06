@@ -1,22 +1,22 @@
 import api from "@/api";
 import Button from "@/components/Button";
 import Carrossel from "@/components/Carrossel";
+import DetalhesModal from "@/components/DetalhesModal";
 import FilterablePeople from "@/components/FilterablePeople";
 import Header from "@/components/Header";
 import type { Paginate, Pessoa, Statistics } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { FaSadTear, FaSearch, FaSmile } from "react-icons/fa";
 import { FaDatabase, FaTv } from "react-icons/fa6";
 
 export default function HomePage() {
   const buscarSectionRef = useRef<HTMLDivElement>(null);
   
+  const [pessoa, setPessoa] = useState<Pessoa>();
   // TODO: Toast
-  // TODO: Modal
   // TODO: Tratar erros
   // TODO: Modo TV
-  // TODO: Melhorar carrossel?
   const { data: pessoasDinamico, isError: pessoasDinamicoError } = useQuery({
     queryKey: ["pessoas-dinamico"],
     queryFn: () => api.get<Pessoa[]>("/pessoas/aberto/dinamico?registros=12"),
@@ -42,6 +42,7 @@ export default function HomePage() {
   });
 
   return <>
+    <DetalhesModal pessoa={pessoa} onClose={() => setPessoa(undefined)} />
     <Header />
     <div className="mx-8 py-16 border-b border-gray-300 flex justify-between items-center flex-col md:flex-row gap-16">
       <div>
@@ -71,17 +72,19 @@ export default function HomePage() {
           <p className="text-xl mb-4 text-center font-medium">Pessoas nesse momento</p>
           <div className="flex gap-16">
             <div>
-              <p className="text-4xl font-bold flex gap-2 items-center">
+              {!stats?.data && <div className="h-10 rounded bg-gray-300 animate-pulse"></div>}
+              {stats?.data && <p className="text-4xl font-bold flex gap-2 items-center">
                 <FaSadTear className="text-3xl" />
-                {stats?.data.quantPessoasDesaparecidas}
-              </p>
+                {stats.data.quantPessoasDesaparecidas}
+              </p>}
               <p className="text-gray-700 -mt-1">desaparecidas</p>
             </div>
             <div className="text-end">
-              <p className="text-4xl font-bold flex gap-2 items-center">
-                {stats?.data.quantPessoasEncontradas}
+              {!stats?.data && <div className="h-10 rounded bg-gray-300 animate-pulse"></div>}
+              {stats?.data && <p className="text-4xl font-bold flex gap-2 items-center">
+                {stats.data.quantPessoasEncontradas}
                 <FaSmile className="text-3xl" />
-              </p>
+              </p>}
               <p className="text-gray-700 -mt-1">encontradas</p>
             </div>
           </div>
@@ -91,10 +94,10 @@ export default function HomePage() {
     <main>
       <div className="border-b border-gray-300 mx-8 py-8">
         <p className="mt-4 font-medium text-xl">Você viu alguma dessas pessoas?</p>
-        <Carrossel data={pessoasDinamico?.data} />
+        <Carrossel data={pessoasDinamico?.data} onClick={(pessoa) => setPessoa(pessoa)} />
       </div>
 
-      <FilterablePeople data={pessoasFiltro?.data} ref={buscarSectionRef} />
+      <FilterablePeople data={pessoasFiltro?.data} ref={buscarSectionRef} onClick={(pessoa) => setPessoa(pessoa)} />
     </main>
   </>;
 }

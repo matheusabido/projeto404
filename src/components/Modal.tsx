@@ -16,7 +16,7 @@ export default function Modal({ children, title, isOpen, onClose }: Props) {
         onClick={onClose}
         className="fixed top-0 left-0 w-full h-full backdrop-blur-[2px] bg-black/40 z-50"
       ></div>
-      <div className="fixed top-1/2 left-1/2 -translate-1/2 z-50 bg-white p-4 rounded w-[600px] max-w-[90vw]">
+      <div className="fixed top-1/2 left-1/2 -translate-1/2 z-50 bg-white p-4 rounded w-[800px] max-w-[90vw] max-h-[90dvh] overflow-auto">
         <div className="border-b border-gray-300 mb-4 pb-2 flex items-center justify-between">
           <p className="text-lg font-medium flex-1">{title}</p>
           <FaX className="cursor-pointer text-gray-700 text-lg" onClick={onClose} />

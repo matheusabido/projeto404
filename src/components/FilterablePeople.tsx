@@ -7,9 +7,10 @@ import type { RefObject } from "react";
 type Props = {
   data?: Paginate<Pessoa>
   ref: RefObject<HTMLDivElement | null>
+  onClick?: (pessoa: Pessoa) => void
 }
 
-export default function FilterablePeople({ data, ref }: Props) {
+export default function FilterablePeople({ data, ref, onClick }: Props) {
   return <div className="px-8 py-12" ref={ref}>
     <div className="flex flex-wrap gap-8 justify-between md:items-center flex-col md:flex-row">
       <div>
@@ -38,7 +39,7 @@ export default function FilterablePeople({ data, ref }: Props) {
     </div>
     <div className="mt-4 gap-8 flex flex-wrap">
       {!data && new Array(20).fill(null).map((_, i) => <Card key={i} />)}
-      {data && data.content.map(pessoa => <Card className="mx-auto" key={pessoa.id} pessoa={pessoa} />)}
+      {data && data.content.map(pessoa => <Card className="mx-auto" key={pessoa.id} pessoa={pessoa} onClick={onClick} />)}
     </div>
   </div>;
 }
