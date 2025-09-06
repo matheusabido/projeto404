@@ -33,7 +33,6 @@ export default function HomePage() {
     }).toString();
   }, [filters, page]);
 
-  // TODO: Modo TV
   const { data: pessoasDinamico, isError: pessoasDinamicoError } = useQuery({
     queryKey: ["pessoas-dinamico"],
     queryFn: () => api.get<Pessoa[]>("/pessoas/aberto/dinamico?registros=12"),
