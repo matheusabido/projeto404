@@ -10,17 +10,20 @@ type Props = {
   to?: string
   size?: "sm" | "md"
   onClick?: () => void
+  loading?: boolean
 }
 
-export default function Button({ children, size="md", variant="primary", to, onClick, className }: Props) {
+export default function Button({ children, size="md", variant="primary", loading, to, onClick, className }: Props) {
   const navigate = useNavigate();
   return <button onClick={to ? () => navigate(to) : onClick} className={twMerge(clsx(
     "rounded-md cursor-pointer transition-all shadow-sm",
     variant === "primary" && "bg-blue-500 hover:bg-blue-600 text-white",
     variant === "outline" && "border border-gray-300 hover:bg-gray-100",
+    loading && "opacity-75 cursor-not-allowed",
     size === "sm" && "text-sm p-1.5 px-3",
     size === "md" && "p-2 px-4",
   ), className)}>
-    {children}
+    {loading && <div className="border-4 w-6 h-6 rounded-full border-gray-500 border-t-white animate-spin mx-auto"></div>}
+    {!loading && children}
   </button>;
 }

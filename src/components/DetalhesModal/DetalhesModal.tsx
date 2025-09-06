@@ -57,7 +57,7 @@ export default function DetalhesModal({ pessoa, onClose }: Props) {
           <p className="font-medium text-xl">{pessoa?.nome}</p>
           <p className="text-gray-700">{pessoa?.idade} anos</p>
           {tab === "resumo" && <Resumo pessoa={pessoa} setTab={setTab} />}
-          {tab === "adicionar" && <AdicionarInformacao setTab={setTab} />}
+          {tab === "adicionar" && <AdicionarInformacao ocorrenciaId={pessoa?.ultimaOcorrencia.ocoId} setTab={setTab} />}
           {tab === "ocorrencias" && <Ocorrencias data={data?.data} setTab={setTab} setAnexos={setAnexos} />}
           {tab === "anexos" && <Anexos setTab={setTab} data={anexos} />}
         </div>

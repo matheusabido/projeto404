@@ -18,7 +18,6 @@ export default function HomePage() {
 
   const [pessoa, setPessoa] = useState<Pessoa>();
 
-  // TODO: Adicionar informações
   // TODO: Filtros
   // TODO: Modo TV
   const { data: pessoasDinamico, isError: pessoasDinamicoError } = useQuery({
