@@ -27,13 +27,16 @@ export default function FilterablePeople({ data, ref, onClick, setPage, setFilte
     <FiltersModal
       isOpen={filtersModalOpen}
       onClose={() => setFiltersModalOpen(false)}
-      onApply={setFilters}
+      onApply={(filters: Filters) => {
+        setFilters(filters);
+        setPage(0);
+      }}
     />
     <div className="flex flex-wrap gap-8 justify-between md:items-center flex-col md:flex-row">
       <div>
         <p className="font-medium text-lg">Lista completa dos cadastros</p>
         {!data && <div className="h-6 w-full bg-gray-300 animate-pulse rounded"></div>}
-        {data && <p className="text-gray-700">Exibindo {data.numberOfElements} resultados de {data.totalElements}. Página {data.pageable.pageNumber+1} de {data.totalPages}.</p>}
+        {data && <p className="text-gray-700">Exibindo {data.numberOfElements} resultados de {data.totalElements}. Página {data.pageable.pageNumber+1} de {Math.max(data.totalPages, 1)}.</p>}
       </div>
   
       <div className="flex gap-4 flex-col-reverse md:flex-row">
@@ -41,7 +44,7 @@ export default function FilterablePeople({ data, ref, onClick, setPage, setFilte
           <Button size="sm" className="py-3" onClick={() => handlePage(-1)}>
             <FaAngleLeft />
           </Button>
-          {data && <p className="text-gray-700">Página {data.pageable.pageNumber+1}/{data.totalPages}</p>}
+          {data && <p className="text-gray-700">Página {data.pageable.pageNumber+1}/{Math.max(data.totalPages, 1)}</p>}
           {!data && <div className="h-6 w-24 bg-gray-300 animate-pulse rounded"></div>}
           <Button size="sm" className="py-3" onClick={() => handlePage(1)}>
             <FaAngleRight />
@@ -58,6 +61,7 @@ export default function FilterablePeople({ data, ref, onClick, setPage, setFilte
     <div className="mt-4 gap-8 flex flex-wrap">
       {!data && new Array(20).fill(null).map((_, i) => <Card className="mx-auto" key={i} />)}
       {data && data.content.map(pessoa => <Card className="mx-auto" key={pessoa.id} pessoa={pessoa} onClick={onClick} />)}
+      {(data && data.content.length === 0) && <p className="text-red-500">Nenhum resultado encontrado com os filtros aplicados.</p>}
     </div>
   </div>;
 }
