@@ -6,7 +6,7 @@ import { formatDate } from "@/utils/date";
 
 type Props = {
   data?: Informacao[]
-  setTab: (tab: "resumo" | "ocorrencias" | "anexos") => void
+  setTab: (tab: "resumo" | "ocorrencias" | "anexos" | "adicionar") => void
   setAnexos: (anexos: string[]) => void
 }
 

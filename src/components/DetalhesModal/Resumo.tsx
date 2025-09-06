@@ -6,7 +6,7 @@ import Button from "../Button";
 
 type Props = {
   pessoa?: Pessoa
-  setTab: (tab: "resumo" | "ocorrencias" | "anexos") => void
+  setTab: (tab: "resumo" | "ocorrencias" | "anexos" | "adicionar") => void
 }
 
 export default function Resumo({ pessoa, setTab }: Props) {
@@ -42,7 +42,7 @@ export default function Resumo({ pessoa, setTab }: Props) {
       </div>}
 
       <div className="flex gap-2 flex-wrap">
-        <Button>
+        <Button onClick={() => setTab("adicionar")}>
           <div className="flex gap-2 items-center">
             <FaPlus />
             <p className="font-medium">Adicionar Informação</p>

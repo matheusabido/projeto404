@@ -3,7 +3,7 @@ import { useToast } from "@/contexts/ToastContext";
 import { FaAngleLeft } from "react-icons/fa6";
 
 type Props = {
-  setTab: (tab: "resumo" | "ocorrencias" | "anexos") => void
+  setTab: (tab: "resumo" | "ocorrencias" | "anexos" | "adicionar") => void
   data?: string[]
 }
 
