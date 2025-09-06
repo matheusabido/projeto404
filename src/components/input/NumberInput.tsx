@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { forwardRef, useImperativeHandle } from "react";
 import InputLabel from "./InputLabel";
+import { twMerge } from "tailwind-merge";
 
 type Props = {
   label?: string
   decimal?: boolean
+  className?: string
 }
 
 export type NumberInputRef = {
@@ -12,7 +14,7 @@ export type NumberInputRef = {
   convertedValue?: number;
 };
 
-const NumberInput = forwardRef<NumberInputRef, Props>(({ label, decimal }, ref) => {
+const NumberInput = forwardRef<NumberInputRef, Props>(({ label, decimal, className }, ref) => {
   const [value, setValue] = useState("");
   const [convertedValue, setConvertedValue] = useState<number | undefined>(undefined);  
 
@@ -43,12 +45,12 @@ const NumberInput = forwardRef<NumberInputRef, Props>(({ label, decimal }, ref) 
   }
 
   return (
-    <div className="relative">
+    <div className="relative flex flex-col flex-1">
       <InputLabel floating={!!value}>{label}</InputLabel>
       <input
         value={value}
         onInput={(e) => handleInput(e.currentTarget.value)}
-        className="border-[1px] border-gray-300 rounded-sm p-2 mt-4"
+        className={twMerge("border-[1px] border-gray-300 rounded-sm p-2 mt-4", className)}
         type="text"
       />
     </div>

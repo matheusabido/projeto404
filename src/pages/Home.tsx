@@ -3,11 +3,12 @@ import Button from "@/components/Button";
 import Carrossel from "@/components/Carrossel";
 import DetalhesModal from "@/components/DetalhesModal/DetalhesModal";
 import FilterablePeople from "@/components/FilterablePeople";
+import type { Filters } from "@/components/FiltersModal";
 import Header from "@/components/Header";
 import { useToast } from "@/contexts/ToastContext";
 import type { Paginate, Pessoa, Statistics } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FaSadTear, FaSearch, FaSmile } from "react-icons/fa";
 import { FaDatabase, FaTv } from "react-icons/fa6";
 
@@ -17,8 +18,21 @@ export default function HomePage() {
   const { addToast } = useToast();
 
   const [pessoa, setPessoa] = useState<Pessoa>();
+  const [filters, setFilters] = useState<Filters>({});
+  const [page, setPage] = useState(0);
+  
+  const queryParams = useMemo(() => {
+    return new URLSearchParams({
+      ...filters.nome ? { nome: filters.nome } : {},
+      ...filters.faixaIdadeInicial !== undefined ? { faixaIdadeInicial: filters.faixaIdadeInicial.toString() } : {},
+      ...filters.faixaIdadeFinal !== undefined ? { faixaIdadeFinal: filters.faixaIdadeFinal.toString() } : {},
+      ...filters.sexo ? { sexo: filters.sexo } : {},
+      ...filters.status ? { status: filters.status } : {},
+      pagina: page.toString(),
+      porPagina: "20",
+    }).toString();
+  }, [filters, page]);
 
-  // TODO: Filtros
   // TODO: Modo TV
   const { data: pessoasDinamico, isError: pessoasDinamicoError } = useQuery({
     queryKey: ["pessoas-dinamico"],
@@ -30,8 +44,8 @@ export default function HomePage() {
   });
 
   const { data: pessoasFiltro, isError: pessoasFiltroError } = useQuery({
-    queryKey: ["pessoas-filtro"],
-    queryFn: () => api.get<Paginate<Pessoa>>("/pessoas/aberto/filtro?porPagina=20"),
+    queryKey: ["pessoas-filtro", queryParams],
+    queryFn: () => api.get<Paginate<Pessoa>>("/pessoas/aberto/filtro?" + queryParams),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
@@ -121,7 +135,7 @@ export default function HomePage() {
         <Carrossel data={pessoasDinamico?.data} onClick={(pessoa) => setPessoa(pessoa)} />
       </div>
 
-      <FilterablePeople data={pessoasFiltro?.data} ref={buscarSectionRef} onClick={(pessoa) => setPessoa(pessoa)} />
+      <FilterablePeople setPage={setPage} setFilters={setFilters} data={pessoasFiltro?.data} ref={buscarSectionRef} onClick={(pessoa) => setPessoa(pessoa)} />
     </main>
   </>;
 }

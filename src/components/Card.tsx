@@ -22,10 +22,7 @@ export default function Card({ pessoa, className, onClick }: Props) {
       {!(pessoa && loaded) && <div className="bg-gray-300 animate-pulse w-full h-full rounded"></div>}
       {pessoa && <MoveableImage
         onLoad={() => setLoaded(true)}
-        onError={() => {
-          setLoaded(true);
-          console.log(`Error loading image for ${pessoa.nome}`);
-        }}
+        onError={() => setLoaded(true)}
         src={pessoa.urlFoto || DefaultPhoto}
         fallbackSrc={DefaultPhoto}
         alt={`Foto de ${pessoa.nome}`}
