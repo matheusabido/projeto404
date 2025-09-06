@@ -1,69 +1,49 @@
-# React + TypeScript + Vite
+# Projeto 404
+Nome: Matheus de Paula Abido
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+E-mail: matheusdepaulaabido@gmail.com
 
-Currently, two official plugins are available:
+Telefone: 65 99258-6487
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Buildar
+Para builder o projeto, basta rodar
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+docker build -t projeto404 .
+```
+```sh
+docker run -d --name projeto404 -p 8080:80 projeto404
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Então, é só abrir o http://localhost:8080
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Depois de testar, rode o comando
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+docker stop projeto404
+```
+
+Se quiser excluir a imagem,
+```sh
+docker rm projeto404
+```
+
+## Como testar
+Por falta de tempo, não escrevi testes automatizados.
+
+### Explorar conteúdo
+
+Para ver as pessoas, existem 3 lugares:
+* Carrosel
+* Filtro
+* Modo TV
+
+O carrossel pega 12 registros da rota dinâmica e exibe, permitindo o usuário navegar usando os botões.
+
+O filtro permite que o usuário busque por uma pessoa específica.
+
+O Modo TV exibe as mesmas 12 pessoas num layout feito para TVs. Para melhor experiência, colocar em tela cheia e scrollar para baixo.
+
+### Adicionando Informações
+
+Para adicionar informações, basta clicar no "Detalhes" no card. Lá, serão exibidas as informações já existentes juntamente de um botão para adicionar novas informações.
